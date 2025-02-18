@@ -5,6 +5,7 @@ import React, { useContext, useState } from "react";
 import Link from "next/link";
 
 import { AuthContext, AuthState } from "@/context/auth-context";
+import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid2";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -24,7 +25,7 @@ const Header = () => {
       direction="row"
       justifyContent="space-between"
       alignItems="center"
-      sx={{ borderBottom: "1px solid black", padding: 1 }}
+      sx={{ borderBottom: "1px solid #f1f1f1", padding: 1 }}
     >
       <Grid size={4}>
         <Link href="/">
@@ -38,10 +39,26 @@ const Header = () => {
         <List sx={{ display: "flex", flexDirection: "row" }}>
           {mainMenuItems?.map((menu, index) => (
             <ListItem className="link" key={`${menu}--${index}`}>
-              <Link href={`${menu.route}`}>{menu.text}</Link>
+              <Link
+                href={`${menu.route}`}
+                style={{ textDecoration: "none", color: "#1e1e1e" }}
+              >
+                {menu.text}
+              </Link>
             </ListItem>
           ))}
-          <ListItem>{isLoggedIn ? "Log out" : "Login"}</ListItem>
+          <ListItem>
+            {isLoggedIn ? (
+              <Chip clickable label="Logout" />
+            ) : (
+              <Link
+                style={{ textDecoration: "none", color: "#1e1e1e" }}
+                href="/login"
+              >
+                Login
+              </Link>
+            )}
+          </ListItem>
         </List>
         <div className="hamburger-icon" onClick={handleMobileClick}>
           {/* {mobile ? (
