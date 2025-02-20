@@ -1,14 +1,18 @@
 "use client";
 import React, { useState } from "react";
 
+import { useRouter } from "next/navigation";
+
 import { useUser } from "@/hooks/user-hook";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
 const Login = () => {
+  const router = useRouter();
   const [userLogin, setUserLogin] = useState<{
     userName: string;
     password: string;
@@ -26,11 +30,19 @@ const Login = () => {
   const handleUserInputs = async (event: React.FormEvent) => {
     event.preventDefault();
     const { userName, password } = userLogin;
-
     if (userName && password) {
-      await login(userName, password);
+      const userAuth = await login(userName, password);
+
+      if (userAuth) {
+      }
     }
   };
+
+  const handleFormCancel = () => {
+    router.back();
+  };
+
+  const hasValidInputs = userLogin.password && userLogin.userName;
 
   return (
     <Box
@@ -76,12 +88,25 @@ const Login = () => {
             />
           </Box>
 
-          <Chip
-            component="button"
-            clickable
-            type="submit"
-            label="Submit form"
-          />
+          <Stack direction="row" spacing={2} justifyContent="flex-end">
+            <Chip
+              variant="outlined"
+              component="button"
+              clickable
+              onClick={handleFormCancel}
+              label="cancel"
+              color="error"
+            />
+            <Chip
+              disabled={!hasValidInputs}
+              variant="filled"
+              color="primary"
+              component="button"
+              clickable
+              type="submit"
+              label="Submit form"
+            />
+          </Stack>
         </Box>
       </Paper>
     </Box>

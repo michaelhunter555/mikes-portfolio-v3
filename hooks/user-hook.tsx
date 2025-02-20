@@ -1,23 +1,35 @@
-import { useCallback } from "react";
+import { useCallback, useContext } from "react";
+
+import { AuthContext, AuthState } from "@/context/auth-context";
 
 export const useUser = () => {
-  const login = useCallback(async (userName: string, password: string) => {
-    try {
-      const response = await fetch(`/api/login`, {
-        method: "POST",
-        body: JSON.stringify({ userName, password }),
-        headers: { "Content-Type": "application/json" },
-      });
+  const auth = useContext(AuthContext);
 
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.error);
+  const login = useCallback(
+    async (
+      userName: string,
+      password: string
+    ): Promise<AuthState | undefined> => {
+      try {
+        const response = await fetch(`/api/login`, {
+          method: "POST",
+          body: JSON.stringify({ userName, password }),
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error);
+        }
+
+        auth?.state?.login?.(data.userData);
+        return data.userData;
+      } catch (err) {
+        console.log(err);
       }
-      return data.userData;
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
+    },
+    []
+  );
 
   return { login };
 };

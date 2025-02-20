@@ -1,3 +1,4 @@
+"use client";
 import { createContext, Dispatch } from "react";
 
 import { PaletteMode } from "@mui/material";
@@ -9,6 +10,9 @@ export interface AuthState {
   isLoggedIn: boolean;
   accountType: "admin" | "subscriber" | null;
   theme: PaletteMode; //subscriber / admin
+  login?: (user: AuthState) => void;
+  logout?: () => void;
+  token?: string;
 }
 
 export type AuthAction =
