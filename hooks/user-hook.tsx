@@ -28,7 +28,8 @@ export const useUser = () => {
         console.log(err);
       }
     },
-    []
+
+    [auth?.state]
   );
 
   return { login };
