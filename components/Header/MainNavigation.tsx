@@ -43,7 +43,9 @@ const Header = () => {
                 href={`${menu.route}`}
                 style={{ textDecoration: "none", color: "#1e1e1e" }}
               >
-                {menu.text}
+                <Typography color="text.secondary" variant="subtitle2">
+                  {menu.text}
+                </Typography>
               </Link>
             </ListItem>
           ))}
@@ -55,7 +57,9 @@ const Header = () => {
                 style={{ textDecoration: "none", color: "#1e1e1e" }}
                 href="/login"
               >
-                Login
+                <Typography variant="subtitle2" color="text.secondary">
+                  Login
+                </Typography>
               </Link>
             )}
           </ListItem>

@@ -1,4 +1,5 @@
 "use client";
+import type { InputHandler, State } from "@/types";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
@@ -8,19 +9,17 @@ import Typography from "@mui/material/Typography";
 
 interface LoginFormProps {
   handleUserInputs: (event: React.FormEvent) => Promise<void>;
-  userLogin: { userName: string; password: string };
-  handleUserName: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleUserPassword: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  formState: State;
+  isLogin: boolean;
+  inputHandler: InputHandler;
   handleFormCancel: () => void;
-  hasValidInputs: boolean;
 }
 const LoginForm = ({
   handleUserInputs,
-  userLogin,
-  handleUserName,
-  handleUserPassword,
+  formState,
+  inputHandler,
+  isLogin,
   handleFormCancel,
-  hasValidInputs,
 }: LoginFormProps) => {
   return (
     <Paper
@@ -37,23 +36,57 @@ const LoginForm = ({
       >
         <Box>
           <Typography variant="subtitle2" color="text.secondary">
-            Username
+            Username or E-mail
           </Typography>
           <TextField
+            id="userName"
             type="text"
-            value={userLogin.userName}
-            onChange={handleUserName}
+            value={formState?.inputs?.username?.value}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              inputHandler(
+                "userName",
+                event.target.value,
+                event.target.value !== ""
+              )
+            }
             fullWidth
           />
         </Box>
+        {!isLogin && (
+          <Box>
+            <Typography variant="subtitle2" color="text.secondary">
+              E-mail
+            </Typography>
+            <TextField
+              id="email"
+              type="email"
+              value={formState?.inputs?.email?.value}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                inputHandler(
+                  "email",
+                  event.target.value,
+                  event.target.value !== ""
+                )
+              }
+              fullWidth
+            />
+          </Box>
+        )}
         <Box>
           <Typography variant="subtitle2" color="text.secondary">
             Password
           </Typography>
           <TextField
+            id="password"
             type="password"
-            value={userLogin.password}
-            onChange={handleUserPassword}
+            value={formState?.inputs?.password?.value}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              inputHandler(
+                "password",
+                event.target.value,
+                event.target.value?.length > 5
+              )
+            }
             fullWidth
           />
         </Box>
@@ -68,13 +101,13 @@ const LoginForm = ({
             color="error"
           />
           <Chip
-            disabled={!hasValidInputs}
+            disabled={!formState?.isValid}
             variant="filled"
             color="primary"
             component="button"
             clickable
             type="submit"
-            label="Submit form"
+            label="Login"
           />
         </Stack>
       </Box>

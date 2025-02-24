@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import Header from "@/components/Header/MainNavigation";
 import QueryClientWrapper from "@/components/shared/QueryClient/QueryClientProvider";
+import { GlobalStyles } from "@/styles/Globalstyles";
+import AppTheme from "@/styles/ThemeProvider";
 
 import { Content, PageContainer } from "../components/Footer/FooterStyles";
 import { AuthProvider } from "../context/authProvider";
@@ -35,10 +37,13 @@ export default function RootLayout({
       >
         <QueryClientWrapper>
           <AuthProvider>
-            <PageContainer>
-              <Header />
-              <Content>{children}</Content>
-            </PageContainer>
+            <AppTheme>
+              <GlobalStyles />
+              <PageContainer>
+                <Header />
+                <Content>{children}</Content>
+              </PageContainer>
+            </AppTheme>
           </AuthProvider>
         </QueryClientWrapper>
       </body>

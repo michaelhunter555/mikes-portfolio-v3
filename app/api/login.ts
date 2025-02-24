@@ -6,10 +6,11 @@ import { findAuthByEmail } from "../../lib/findAuthByEmail";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async function (req: NextApiRequest, res: NextApiResponse) {
-  const { email, password } = req.body;
+  const { email, password, userName } = req.body;
 
   try {
-    const user = await findAuthByEmail(String(email), res);
+    const handleLoginValue = email ?? userName;
+    const user = await findAuthByEmail(String(handleLoginValue), res);
 
     if (user && user.password !== password) {
       return res
@@ -19,6 +20,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
 
     const userData = {
       name: user?.name,
+      userName: user?.userName,
       email: user?.email,
       theme: user?.theme as PaletteMode,
       accountType: user?.accountType as "subscriber" | "admin" | null,

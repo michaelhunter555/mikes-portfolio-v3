@@ -5,14 +5,18 @@ import { PaletteMode } from "@mui/material";
 export interface IUser extends mongoose.Document {
   email?: string | undefined | null;
   password?: string;
+  userName?: string;
   name?: string | undefined | null;
   theme?: PaletteMode;
-  accountType?: "subscriber" | "admin" | null;
+  accountType?: AccountTypes;
 }
+
+export type AccountTypes = "subscriber" | "admin" | null;
 
 const UserSchema = new mongoose.Schema<IUser>({
   email: { type: String, required: true },
   name: { type: String, required: true },
+  userName: { type: String, required: true },
   password: { type: String, required: true },
   theme: {
     type: String,

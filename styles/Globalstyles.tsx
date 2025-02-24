@@ -1,7 +1,9 @@
+"use client";
 import { useContext } from "react";
 
 import { AuthContext, AuthState } from "@/context/auth-context";
 import { css, Global } from "@emotion/react";
+import { PaletteMode } from "@mui/material";
 
 export const GlobalStyles = () => {
   const auth = useContext(AuthContext);
@@ -21,3 +23,9 @@ export const GlobalStyles = () => {
     />
   );
 };
+
+export const selectPalette = (mode: PaletteMode) => ({
+  palette: {
+    mode: mode,
+  },
+});
