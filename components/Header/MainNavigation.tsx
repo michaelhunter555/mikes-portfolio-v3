@@ -25,7 +25,13 @@ const Header = () => {
       direction="row"
       justifyContent="space-between"
       alignItems="center"
-      sx={{ borderBottom: "1px solid #f1f1f1", padding: 1 }}
+      sx={{
+        borderBottom: (theme) =>
+          theme.palette.mode === "light"
+            ? "1px solid #f1f1f1"
+            : "1px solid #3f3f3f",
+        padding: 1,
+      }}
     >
       <Grid size={4}>
         <Link href="/">
