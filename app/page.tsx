@@ -13,7 +13,7 @@ export default function Home() {
           <Grid size={12}>
             <Stack direction="column" alignItems="center" spacing={2}>
               <Typography fontWeight={700} variant="h4" color="text.secondary">
-                I code to Improve lives & Solve Problems.
+                I code to Improve Lives & Solve Problems.
               </Typography>
               <Avatar />
               <Stack direction="row" spacing={1}>
